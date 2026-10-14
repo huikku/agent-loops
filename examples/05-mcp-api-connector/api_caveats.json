@@ -1,0 +1,26 @@
+{
+  "version": "1.2.0",
+  "last_audit": "2026-10-14T12:00:00Z",
+  "endpoints": {
+    "/api/v1/inventory": {
+      "quirks": [
+        "Documented max page size is 250, but backend silently truncates to 50 items.",
+        "Must specify status=active; omitting it includes obsolete 2018 records.",
+        "Sorting by quantity requires ascending (asc) or defaults to random order."
+      ],
+      "safe_defaults": {
+        "limit": 50,
+        "status": "active"
+      }
+    },
+    "/api/v1/metrics": {
+      "quirks": [
+        "Timestamps without explicit ISO offsets default to UTC, leading to date shifts in local reporting.",
+        "Missing district_id throws an unhandled 500 error instead of a 400 Bad Request."
+      ],
+      "mandatory_params": [
+        "district_id"
+      ]
+    }
+  }
+}

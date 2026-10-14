@@ -121,3 +121,4 @@ One of the most vital security and reliability guarantees in loop engineering is
 3. **Human Ratchet:** The human operator reads `proposals.md`, accepts or rejects suggestions, and commits changes to `taste.md`.
 
 This prevents **policy drift**, where an unconstrained agent gradually lowers its own quality standards over time to minimize friction.
+

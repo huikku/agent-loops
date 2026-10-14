@@ -19,3 +19,4 @@ python3 rollback_guard.py --simulate-failure
 # 3. Test Alert Dispatch
 python3 alert_webhook.py --severity P1 --message "Candidate ingestion returned 0 items; possible API payload schema change."
 ```
+

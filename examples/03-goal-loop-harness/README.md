@@ -33,3 +33,4 @@ This example demonstrates how to implement an iterative, contract-driven **Goal 
 ```bash
 python3 run_goal_loop.py
 ```
+

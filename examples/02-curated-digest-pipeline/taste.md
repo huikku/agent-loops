@@ -17,3 +17,4 @@ This policy file is authored and owned by the human operator. The evaluation age
 - Speculative cryptocurrency, venture capital hype, or corporate marketing PR.
 - Vague high-level announcements without technical implementation details or code.
 - Articles behind heavy paywalls or requiring login.
+

@@ -145,3 +145,4 @@ To prevent runaway loops that consume millions of tokens when encountering an im
 
 #### 4. Structured Audit Trail
 Every iteration must append its diff, error log, and corrective plan to disk (`goal_run.log`) to provide complete post-mortem observability.
+

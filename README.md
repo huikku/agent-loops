@@ -29,8 +29,9 @@ The core operational doctrine of this guide is:
 - [4. State & Memory Architecture](#4-state--memory-architecture)
 - [5. Anti-Entropy: The 3 Defensive Laws Against Silent Failures](#5-anti-entropy-the-3-defensive-laws-against-silent-failures)
 - [6. Production Case Studies](#6-production-case-studies)
-- [7. Onboarding Prompt for Autonomous Coding Agents](#7-onboarding-prompt-for-autonomous-coding-agents)
-- [8. Repository Structure & Reference Implementations](#8-repository-structure--reference-implementations)
+- [7. The Hands & Senses: Model Context Protocol (MCP) Connectors](#7-the-hands--senses-model-context-protocol-mcp-connectors)
+- [8. Onboarding Prompt for Autonomous Coding Agents](#8-onboarding-prompt-for-autonomous-coding-agents)
+- [9. Repository Structure & Reference Implementations](#9-repository-structure--reference-implementations)
 
 ---
 
@@ -253,22 +254,54 @@ To defend against silent loop entropy, enforce **The Three Defensive Laws**:
 
 ---
 
-## 7. Onboarding Prompt for Autonomous Coding Agents
+---
+
+## 7. The Hands & Senses: Model Context Protocol (MCP) Connectors
+
+![Model Context Protocol // Subsystem Connector Specification](assets/mcp-architecture.webp)
+
+> **"An API is like walking into a dark house where all the lights are off and having to stumble around to find the kitchen. An MCP turns the lights on."**  
+> — TJ Muehleman & Jonathan Nesbitt, Standard Co (*AI Series: How to Build an MCP*)
+
+While **Loops** act as the executive brain, scheduler, and feedback harness, **Model Context Protocol (MCP)** servers serve as the agent's hands, senses, and live data connectors.
+
+### Why Build an MCP on Top of Your Existing API?
+1. **The Discovery Barrier:** Domain specialists understand their data, but struggle with raw endpoints, cURL syntax, and pagination parameters. An MCP exposes structured metadata and tools so users can converse with their data directly in plain English.
+2. **Cross-Endpoint Dynamic Joins:** An MCP allows an agent to correlate disparate endpoints (e.g. clinic inventory + epidemiological outbreak rates) and perform client-side joins without requiring backend developers to write bespoke resolvers.
+3. **Conversational Integration Drafting:** Users can explore endpoints conversationally in chat and ask the agent to self-generate production cURL/Python integration code based on discovered queries.
+4. **Thin Adapter & Zero Database Re-wiring:** The MCP server proxies calls through existing APIs, inheriting existing role-based access control (RBAC), tenant isolation, and database safeguards.
+
+### Local MCP vs. Remote / Web MCP
+- **Local MCP (stdio transport):** Runs on local CLI / Docker process; zero hosting cost. Ideal for initial authoring and single-developer workflows.
+- **Remote / Web MCP (SSE transport):** Hosted on Vercel, Fly.io, or AWS with a public HTTPS endpoint. Zero-friction client setup (paste URL in Claude/ChatGPT settings) and shared across the entire enterprise organization.
+
+### The Translation & Caveat Layer ("Cliff Notes for the Codebase")
+Real-world APIs have unwritten quirks: silent row truncations, mandatory filter pairs, or timezone assumptions. Without guidance, agents burn 10–15 trial-and-error roundtrips discovering these limitations.
+
+The **Translation & Caveat Layer** (`api_caveats.json`) stores these quirks directly in the MCP connector. The server automatically clamps parameters to safe limits and applies mandatory filters before hitting the API, eliminating trial-and-error noise by over 80%.
+
+*Detailed documentation: [`docs/06-mcp-connectors-and-apis.md`](docs/06-mcp-connectors-and-apis.md)*  
+*Working implementation: [`examples/05-mcp-api-connector/`](examples/05-mcp-api-connector)*
+
+---
+
+## 8. Onboarding Prompt for Autonomous Coding Agents
 
 Copy and paste the specification below directly into **Claude Code**, **Codex**, or the **Antigravity CLI** to configure, audit, or build loops for your project:
 
 ```text
-# Autonomous Loop Engineering Specification
+# Autonomous Loop & MCP Engineering Specification
 Reference Architecture: https://github.com/huikku/agent-loops
 
-You are an autonomous AI systems engineer. Your mission is to design, implement, and verify robust agentic loops using the 3-Layer System (Deterministic Scripts, Agent Reasoning, Human Judgment Policy).
+You are an autonomous AI systems engineer. Your mission is to design, implement, and verify robust agentic loops using the 3-Layer System (Deterministic Scripts, Agent Reasoning, Human Judgment Policy) augmented with Model Context Protocol (MCP) connectors.
 
 Enforce these strict architectural rules:
 
-1. System Partitioning (The 3 Layers):
+1. System Partitioning (The 3 Layers + MCP Hands):
    - Layer 1 (Deterministic Scripts): Use Python/Bash for all I/O, fetching, formatting, and file manipulation. Zero LLM involvement for mechanical tasks.
    - Layer 2 (Agent Reasoning): Use LLM evaluation only where semantic comprehension, extraction, synthesis, or creative drafting is strictly required.
    - Layer 3 (Human Policy): Load plain-English Markdown configuration files (taste.md, rules.md) as immutable operational constraints. The agent may append proposals to proposals.md, but MUST NEVER edit policy files directly.
+   - Connectors (MCP Subsystems): Proxy API endpoints through lightweight MCP adapters. Consult the Translation & Caveat Layer (api_caveats.json) to apply safe clamps and mandatory filters on the first attempt without trial-and-error noise.
 
 2. Loop Taxonomy:
    - Identify whether the task requires a Message Loop, Heartbeat Loop, Schedule/Cron, Event Hook, or Goal Loop.
@@ -280,7 +313,7 @@ Enforce these strict architectural rules:
 3. State & Memory Management:
    - Treat every run as ephemeral. Do not rely on session memory.
    - Maintain persistent state via git or disk:
-     - Deduplication set: seen_ids.json
+     - Deduplication set: state/seen_ids.json
      - Append-only audit ledger: decisions.log (timestamp | id | decision | reason)
      - Proposal file: proposals.md
 
@@ -294,20 +327,24 @@ Begin by inspecting the workspace, reviewing candidate inputs, and proposing the
 
 ---
 
-## 8. Repository Structure & Reference Implementations
+## 9. Repository Structure & Reference Implementations
 
 ```
 agent-loops/
 ├── assets/
-│   ├── banner.webp                 # Nostromo flight deck aerospace diagram
+│   ├── banner.webp                 # Nostromo Master Loop Engineering diagram
 │   ├── banner.png                  # High-res PNG master
-│   └── banner.jpg                  # Optimized JPEG
+│   ├── banner.jpg                  # Optimized JPEG
+│   ├── mcp-architecture.webp       # Nostromo MCP Subsystem Connector diagram
+│   ├── mcp-architecture.png        # High-res PNG master
+│   └── mcp-architecture.jpg        # Optimized JPEG
 ├── docs/
 │   ├── 01-loop-archetypes.md       # In-depth mechanics of the 5 loop archetypes
 │   ├── 02-three-layer-system.md    # Designing the scripts vs reasoning vs taste stack
 │   ├── 03-state-and-memory.md      # Implementing persistent disk & git ledgers
 │   ├── 04-anti-silent-failures.md  # Pre-flight, rollback, and alert harnesses
-│   └── 05-llm-onboarding.md        # Full prompt templates for coding agents
+│   ├── 05-llm-onboarding.md        # Full prompt templates for coding agents
+│   └── 06-mcp-connectors-and-apis.md # Complete MCP guide: APIs, auth, caveats
 ├── examples/
 │   ├── 01-dropped-commitments/     # Scanner for email, Slack & meeting loose-ends
 │   │   ├── scan_commitments.py
@@ -322,12 +359,18 @@ agent-loops/
 │   │   ├── run_goal_loop.py
 │   │   ├── grader.py
 │   │   └── contract.json
-│   └── 04-anti-silent-failure/     # Pre-flight, atomic rollback, and loud alerting
-│       ├── preflight.py
-│       ├── rollback_guard.py
-│       └── alert_webhook.py
+│   ├── 04-anti-silent-failure/     # Pre-flight, atomic rollback, and loud alerting
+│   │   ├── preflight.py
+│   │   ├── rollback_guard.py
+│   │   └── alert_webhook.py
+│   └── 05-mcp-api-connector/       # API-to-MCP adapter with Caveat Layer
+│       ├── mcp_server.py
+│       ├── mock_backend_api.py
+│       ├── api_caveats.json
+│       └── test_client.py
 └── scripts/
-    └── generate_banner.py          # Script used to generate the Nostromo HUD diagram
+    ├── generate_banner.py          # Script generating Master Loop HUD diagram
+    └── generate_mcp_diagram.py     # Script generating MCP Connector HUD diagram
 ```
 
 ---
@@ -335,6 +378,7 @@ agent-loops/
 ## Credits & References
 
 - **Standard Co AI Series (Vol. 5):** *AI Agent Loops: Automate the Work, Keep the Judgment* by Jason Elgin ([YouTube Reference](https://www.youtube.com/watch?v=mo2MuSBbhQ0))
+- **Standard Co AI Series (MCP Session):** *How to Build an MCP: Add an AI Connector on Top of Your API* by Jonathan Nesbitt & TJ Muehleman ([YouTube Reference](https://www.youtube.com/watch?v=YYSG1Cqyhrw))
 - **Boris Cherny:** Creator of Claude Code at Anthropic (*"I don't prompt Claude anymore. I have loops running that prompt Claude."*)
 - **Addy Osmani:** Engineering Director at Google (*"Loop Engineering: When Agents Prompt Agents"*)
 - **Peter Steinberger:** Creator of OpenClaw & autonomous agent loops
@@ -343,3 +387,4 @@ agent-loops/
 ---
 
 *Open-sourced under the MIT License by [John Huikku](https://alienrobot.com).*
+

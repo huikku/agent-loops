@@ -139,3 +139,4 @@ In Goal Loops (`/goal`), agents can get stuck in self-reinforcing retry loops. I
    Agent produced identical outputs across 3 consecutive cycles without resolving errors.
    Aborting loop to protect token quota.
    ```
+

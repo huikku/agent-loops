@@ -45,3 +45,4 @@ This example implements the exact 3-layer architecture behind Jason Elgin's 6-da
    python3 evaluate_digest.py
    ```
    *Scores candidates against `taste.md`, writes `daily_edition.md`, and logs rationale to `decisions.log`.*
+
