@@ -1,0 +1,42 @@
+[
+  {
+    "id": "msg_001",
+    "channel": "slack",
+    "sender": "John Huikku",
+    "recipient": "Sarah Lin",
+    "timestamp": "2026-10-04T14:22:00Z",
+    "text": "Hey Sarah, I'll send you the updated ComfyUI multi-GPU LoRA workflow JSON by end of day Tuesday."
+  },
+  {
+    "id": "msg_002",
+    "channel": "email",
+    "sender": "John Huikku",
+    "recipient": "Marcus Vance",
+    "timestamp": "2026-10-09T09:15:00Z",
+    "text": "Marcus, great sync yesterday. I will review PR #44 for the tracking hub by Thursday so you can cut the release."
+  },
+  {
+    "id": "msg_003",
+    "channel": "slack",
+    "sender": "John Huikku",
+    "recipient": "General Channel",
+    "timestamp": "2026-10-11T16:45:00Z",
+    "text": "Great demo today team! Really appreciate everyone's hard work on the new renderer."
+  },
+  {
+    "id": "msg_004",
+    "channel": "notes",
+    "sender": "Meeting Notes",
+    "recipient": "John Huikku",
+    "timestamp": "2026-10-12T11:00:00Z",
+    "text": "Action Item: John to run local memory bandwidth benchmarks on RTX Pro 6000 and post results by Friday."
+  },
+  {
+    "id": "msg_005",
+    "channel": "email",
+    "sender": "John Huikku",
+    "recipient": "David Chen",
+    "timestamp": "2026-10-13T18:30:00Z",
+    "text": "Let's definitely grab coffee next time you're visiting the studio."
+  }
+]

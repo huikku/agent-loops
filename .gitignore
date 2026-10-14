@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+*.pyo
+*.tmp
+.workspace_snapshot/
+.DS_Store

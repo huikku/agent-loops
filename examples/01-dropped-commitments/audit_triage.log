@@ -1,0 +1,5 @@
+2026-10-14T00:00:00+00:00 | msg_001 | COMMITMENT | P0 - OVERDUE | Explicit promise of deliverable with temporal deadline.
+2026-10-14T00:00:00+00:00 | msg_002 | COMMITMENT | P0 - OVERDUE | Explicit promise of deliverable with temporal deadline.
+2026-10-14T00:00:00+00:00 | msg_003 | DISCARDED | N/A | Social pleasantry or informational comment with no actionable deliverable.
+2026-10-14T00:00:00+00:00 | msg_004 | COMMITMENT | P1 - IMMINENT | Explicit promise of deliverable with temporal deadline.
+2026-10-14T00:00:00+00:00 | msg_005 | DISCARDED | N/A | Social pleasantry or informational comment with no actionable deliverable.

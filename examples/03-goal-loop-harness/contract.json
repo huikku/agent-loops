@@ -1,0 +1,20 @@
+{
+  "contract_id": "goal_crosslink_posts_v1",
+  "description": "Ensure all documentation posts meet heading and cross-link standards.",
+  "max_iterations": 5,
+  "targets": [
+    "posts/post_1.md",
+    "posts/post_2.md",
+    "posts/post_3.md"
+  ],
+  "requirements": [
+    {
+      "rule": "h1_header_present",
+      "check": "File must start with or contain a single top-level # heading"
+    },
+    {
+      "rule": "min_internal_links",
+      "check": "File must contain at least 2 valid markdown links [text](url)"
+    }
+  ]
+}

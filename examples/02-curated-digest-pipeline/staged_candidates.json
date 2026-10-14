@@ -1,0 +1,26 @@
+[
+  {
+    "url": "https://arxiv.org/abs/2610.04812",
+    "title": "Gated DeltaNet Layer Sizing & Memory Bandwidth Inferences",
+    "source": "arXiv cs.LG",
+    "body": "Empirical analysis showing a 3:1 linear-to-softmax attention ratio achieves O(1) state memory while maintaining 65k context with only 4GB KV cache."
+  },
+  {
+    "url": "https://techhype.io/top-10-ai-tools-2026",
+    "title": "Top 10 AI Tools to Boost Your Daily Hustle in 2026",
+    "source": "TechHype",
+    "body": "Here are 10 amazing affiliate tools that will completely automate your life with no effort required."
+  },
+  {
+    "url": "https://alienrobot.com/2026-10-14-qwen-3-8-local-hardware-sizing.html",
+    "title": "Running Qwen 3.8 locally: from an 8GB RTX 3050 to a 128GB Thor dev kit",
+    "source": "Alienrobot Devlog",
+    "body": "Benchmarking token decode throughput across consumer GPUs, PCIe bandwidth penalty laws, and speculative decoding draft heads."
+  },
+  {
+    "url": "https://standardco.de/ai-series/volume-5-loops",
+    "title": "AI Agent Loops: Automate the Work, Keep the Judgment",
+    "source": "Standard Co",
+    "body": "Exploring the 3-layer loop engineering architecture: deterministic scripts, agent reasoning, and human policy ownership."
+  }
+]
