@@ -34,3 +34,4 @@ This starts the mock API in the background, spins up the MCP server, and execute
 1. Direct inspection of the `api://caveats` resource.
 2. Invocation of `get_clinic_inventory` showing automatic pagination clamp and active-status filtering.
 3. Cross-endpoint joining of clinic inventory with district health metrics.
+

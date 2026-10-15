@@ -193,3 +193,4 @@ As backend APIs evolve, MCP adapters can fall out of sync:
    Draft the updated TypeScript tool definitions and refresh api_caveats.json.
    ```
 2. **CI Regression Tests:** Implement automated end-to-end integration tests that spin up the MCP server against a staging API and verify that every tool returns schema-valid responses.
+

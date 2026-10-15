@@ -109,3 +109,4 @@ if __name__ == "__main__":
     # If called via CLI with test json
     if len(sys.argv) > 1 and sys.argv[1] == "--test":
         print(json.dumps(dispatch_request({"method": "tools/list", "id": 1}), indent=2))
+

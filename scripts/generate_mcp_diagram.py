@@ -334,3 +334,4 @@ img.save(out_png, "PNG")
 img.save(out_jpg, "JPEG", quality=95)
 img.save(out_webp, "WEBP", quality=95)
 print(f"Generated MCP diagrams: {out_png}, {out_jpg}, {out_webp}")
+
