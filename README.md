@@ -39,29 +39,31 @@ The core operational doctrine of this guide is:
 
 The most common failure in agent design is asking an LLM to perform tasks that deterministic code handles faster, cheaper, and with 100% reliability. A production loop partitions responsibility into three distinct layers:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│ LAYER 1: DETERMINISTIC SCRIPTS (Owner: Shell / Cron / CI Pipeline)     │
-│ • Land-grab candidate scraping, RSS parsing, REST API querying         │
-│ • Filesystem polling, Git operations, JSON payload normalization       │
-│ • Fast, predictable, zero-token cost, zero hallucination risk          │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Candidates & Raw Context
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ LAYER 2: AGENT REASONING (Owner: Autonomous AI Agent)                  │
-│ • Reads full candidate context, extracts commitments, triages loose ends│
-│ • Evaluates content against human criteria and quality thresholds      │
-│ • Synthesizes digests, drafts emails/PRs, packages actionable items    │
-└───────────────────────────────────┬────────────────────────────────────┘
-                                    │ Judged Against Rules
-                                    ▼
-┌────────────────────────────────────────────────────────────────────────┐
-│ LAYER 3: HUMAN JUDGMENT & POLICY (Owner: Human Operator)               │
-│ • Plain-English files: taste.md, rules.md, criteria.md                 │
-│ • Defines what "good" means, subjective editorial tone, safety bounds  │
-│ • Agent may propose changes, but ONLY the human can modify policies    │
-└────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph Layer1["Layer 1: Deterministic Scripts (Shell / Cron / CI Pipeline)"]
+        direction TB
+        L1_1["Candidate scraping, RSS parsing, REST API querying"]
+        L1_2["Filesystem polling, Git operations, payload normalization"]
+        L1_3["Fast, predictable, $0 token cost, 0% hallucination risk"]
+    end
+
+    subgraph Layer2["Layer 2: Agent Reasoning (Autonomous AI Agent)"]
+        direction TB
+        L2_1["Full candidate context analysis & commitment extraction"]
+        L2_2["Content evaluation against human criteria & quality thresholds"]
+        L2_3["Synthesizes digests, drafts PRs/emails, packages action items"]
+    end
+
+    subgraph Layer3["Layer 3: Human Judgment & Policy (Human Operator)"]
+        direction TB
+        L3_1["Plain-English text files: taste.md, rules.md, criteria.md"]
+        L3_2["Defines quality thresholds, subjective tone, safety bounds"]
+        L3_3["Authority Asymmetry: Only the human can modify policy files"]
+    end
+
+    Layer1 -->|"Raw Candidates & Unprocessed Context"| Layer2
+    Layer2 -->|"Drafted Items & Policy Proposals"| Layer3
 ```
 
 ### Layer Partitioning Breakdown
@@ -82,24 +84,27 @@ The most common failure in agent design is asking an LLM to perform tasks that d
 
 Loop architectures fall into five distinct execution patterns:
 
-```
-                      ┌─────────────────────────┐
-                      │    5 LOOP ARCHETYPES    │
-                      └────────────┬────────────┘
-         ┌──────────────┬──────────┴───────────┬──────────────┐
-         ▼              ▼                      ▼              ▼
-   ┌───────────┐  ┌───────────┐          ┌───────────┐  ┌───────────┐
-   │  MESSAGE  │  │ HEARTBEAT │          │ SCHEDULE  │  │   HOOK    │
-   │ Turn-based│  │ Metronome │          │ Cadence   │  │ Event-    │
-   │ Chat loop │  │ Liveness  │          │ Cron job  │  │ Triggered │
-   └───────────┘  └───────────┘          └───────────┘  └───────────┘
-                                      │
-                                      ▼
-                                ┌───────────┐
-                                │   GOAL    │
-                                │ Contract- │
-                                │ Driven    │
-                                └───────────┘
+```mermaid
+flowchart TD
+    Archetypes["5 Operational Loop Archetypes"]
+
+    subgraph Cat1["Interactive & Reactive"]
+        Msg["1. Message Loop -- Turn-based human chat"]
+        Hook["4. Event Hook Loop -- Triggered by Git commits / webhooks"]
+    end
+
+    subgraph Cat2["Time & Cadence Driven"]
+        Heart["2. Heartbeat Loop -- High-frequency liveness pulse"]
+        Sched["3. Schedule Loop -- Cron cadence for daily/weekly tasks"]
+    end
+
+    subgraph Cat3["Autonomous & Contract Driven"]
+        Goal["5. Goal Loop (/goal) -- Recursive execution until verified true"]
+    end
+
+    Archetypes --> Cat1
+    Archetypes --> Cat2
+    Archetypes --> Cat3
 ```
 
 ### 1. The Message Loop (Interactive Human-in-the-Loop)
@@ -132,24 +137,18 @@ The Goal Loop represents the true frontier of agentic engineering. Unlike open-e
 
 A production goal loop requires four mandatory components:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│ 1. TESTABLE OBJECTIVE                                                  │
-│    Must be a binary, programmatic definition of done.                  │
-│    ✓ GOOD: "Iterate until all 30 markdown posts contain 2 valid links" │
-│    ✗ BAD:  "Keep working until my presentation looks good"             │
-├────────────────────────────────────────────────────────────────────────┤
-│ 2. INDEPENDENT VERIFIER (THE DECOUPLED GRADER)                         │
-│    "An agent cannot grade its own paper."                              │
-│    The generator agent and the verification checker must be decoupled. │
-├────────────────────────────────────────────────────────────────────────┤
-│ 3. HARD STOP BOUNDS (THE RUNAWAY CIRCUIT BREAKER)                      │
-│    Mandatory iteration ceiling (e.g., max 10 passes, 2-hour timeout).  │
-│    Prevents catastrophic token consumption loops.                      │
-├────────────────────────────────────────────────────────────────────────┤
-│ 4. PERSISTENT AUDIT TRAIL                                              │
-│    Appends structured diffs and rationale to disk on every iteration.  │
-└────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    Start(["Start Goal Loop (/goal)"]) --> Objective["1. Testable Objective: Binary definition of done"]
+    Objective --> Gen["Execute Agent Pass: Generate, refactor, or repair target state"]
+    Gen --> Audit["4. Persistent Audit Trail: Record diffs & rationale to disk"]
+    Audit --> Verifier{"2. Independent Verifier: Decoupled grader evaluates contract"}
+
+    Verifier -->|"Contract Passed (True)"| Done(["Goal Achieved: Success exit 0"])
+    Verifier -->|"Contract Failed (False)"| Breaker{"3. Hard Stop Bounds: Iteration < Ceiling?"}
+
+    Breaker -->|"Yes: Budget Remains"| Gen
+    Breaker -->|"No: Limit Exceeded"| Halt(["Circuit Breaker Tripped: Halt & raise alert"])
 ```
 
 ---
@@ -200,24 +199,24 @@ Automated loops fail in insidious ways. Unlike traditional code that crashes wit
 
 To defend against silent loop entropy, enforce **The Three Defensive Laws**:
 
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│ LAW I: THE PRE-FLIGHT INTEGRITY CHECK                                  │
-│ Before executing a loop, verify the health of the previous run.        │
-│ • Did the prior run produce output?                                    │
-│ • Are state ledgers uncorrupted?                                       │
-│ • If the prior state was anomalous, halt and raise an alert.           │
-├────────────────────────────────────────────────────────────────────────┤
-│ LAW II: ATOMIC ROLLBACK                                                │
-│ Never commit or deploy partial state.                                  │
-│ • If an agent crashes midway through a 30-item batch, roll back all    │
-│   disk writes to the last known clean git commit.                      │
-├────────────────────────────────────────────────────────────────────────┤
-│ LAW III: BE LOUD ON FAILURE                                            │
-│ Silent failures breed technical and organizational debt.               │
-│ • Any unhandled exception, empty ingestion anomaly, or verification   │
-│   rejection must trigger an immediate outbound webhook (Slack/Email).  │
-└────────────────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph Law1["LAW I: The Pre-Flight Integrity Check"]
+        L1_Start["Trigger Loop Execution"] --> L1_Check{"Prior run healthy & state uncorrupted?"}
+        L1_Check -->|"Pass"| Execute["Execute Agent Workload"]
+        L1_Check -->|"Fail"| Halt1["Halt Pre-Flight"]
+    end
+
+    subgraph Law2["LAW II: Atomic Rollback"]
+        Execute --> L2_Eval{"Iteration succeeded & verified?"}
+        L2_Eval -->|"Success"| Commit["Commit new state to disk & Git"]
+        L2_Eval -->|"Error / Partial Fail"| Rollback["Atomic Rollback: Discard partial writes & restore clean HEAD"]
+    end
+
+    subgraph Law3["LAW III: Be Loud on Failure"]
+        Halt1 --> Alert["Trigger Immediate Outbound Alert (Slack / Webhook / Email)"]
+        Rollback --> Alert
+    end
 ```
 
 ---
