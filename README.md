@@ -381,7 +381,6 @@ agent-loops/
 - **Boris Cherny:** Creator of Claude Code at Anthropic (*"I don't prompt Claude anymore. I have loops running that prompt Claude."*)
 - **Addy Osmani:** Engineering Director at Google (*"Loop Engineering: When Agents Prompt Agents"*)
 - **Peter Steinberger:** Creator of OpenClaw & autonomous agent loops
-- **Design System:** Late-70s aerospace cockpit typography and technical HUD graphics inspired by Ron Cobb's work on the USCSS Nostromo (*Alien*, 1979) and curated by [alienrobot.com](https://alienrobot.com).
 
 ---
 
