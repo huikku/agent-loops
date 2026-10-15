@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
-"""generate_mcp_diagram.py: Generates the Nostromo-styled widescreen diagram for
+"""generate_mcp_diagram.py: Generates the future aerospace-styled widescreen diagram for
 Model Context Protocol (MCP) Subsystem Connectors & API Translation Layer.
-Aesthetic: Ron Cobb, USCSS Nostromo avionics, DIN typography, matte slate palette.
+Aesthetic: Future aerospace avionics, DIN typography, matte slate palette.
 """
 from PIL import Image, ImageDraw, ImageFont
 
-font_dir = "/tmp/nostromo_fonts"
+font_dir = "/tmp/aerospace_fonts"
 din_bold = f"{font_dir}/D-DIN-Bold.ttf"
 din_regular = f"{font_dir}/D-DIN.ttf"
 din_exp = f"{font_dir}/D-DINExp-Bold.ttf"
 mono_bold = f"{font_dir}/JetBrainsMono-Bold.ttf"
 mono_reg = f"{font_dir}/JetBrainsMono-Regular.ttf"
 
-# Colors - Ron Cobb / Nostromo Palette
+# Colors - Future Aerospace Palette
 BG_COLOR = (15, 18, 23)          # Matte Charcoal Slate
 PANEL_BG = (22, 27, 34)          # Dark Industrial Basalt
 PANEL_SUB = (28, 34, 43)         # Sub-box fill
@@ -102,7 +102,7 @@ draw_crosshair(draw, W - 50, H - 50)
 
 # --- Header Telemetry ---
 draw_hazard_stripe(draw, 35, 30, 48, 16)
-draw_tracked_text(draw, 95, 31, "USCSS NOSTROMO // MODEL CONTEXT PROTOCOL (MCP) // AVIONICS BUS REF 180286-MCP", f_micro, TEXT_MUTED, spacing=2)
+draw_tracked_text(draw, 95, 31, "FUTURE AEROSPACE // MODEL CONTEXT PROTOCOL (MCP) // AVIONICS BUS REF 180286-MCP", f_micro, TEXT_MUTED, spacing=2)
 
 status_w, status_h = 240, 24
 status_x = W - 35 - status_w
@@ -319,7 +319,7 @@ for mhdr, mdesc in maint_bullets:
 # --- Bottom Telemetry Bar ---
 foot_y = H - 38
 draw.line([(35, foot_y), (W - 35, foot_y)], fill=PANEL_BORDER, width=1)
-draw_tracked_text(draw, 35, foot_y + 10, "DESIGN SYSTEM: RON COBB NOSTROMO HUD // DIN AEROSPACE TYPOGRAPHY", f_micro, TEXT_DIM, spacing=2)
+draw_tracked_text(draw, 35, foot_y + 10, "DESIGN SYSTEM: FUTURE AEROSPACE HUD // DIN TECHNICAL TYPOGRAPHY", f_micro, TEXT_DIM, spacing=2)
 draw.text((640, foot_y + 10), "ALIENROBOT.COM // MCP CONNECTOR SPECIFICATION", font=f_micro, fill=CYAN_ACCENT)
 
 repo_str = "PUBLIC REPOSITORY: GITHUB.COM/HUIKKU/AGENT-LOOPS"

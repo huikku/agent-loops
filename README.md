@@ -1,6 +1,6 @@
 # AI Agent Loops: Loop Engineering & Autonomous Verification Guide
 
-![AI Agent Loops // USCSS Nostromo Flight Deck Specification](assets/banner.webp)
+![AI Agent Loops // Future Aerospace Flight Deck Specification](assets/banner.webp)
 
 > **"I don't prompt Claude anymore. I have loops running that prompt Claude. My job is to write loops."**  
 > — Boris Cherny, Creator of Claude Code (Anthropic)
@@ -331,10 +331,10 @@ Begin by inspecting the workspace, reviewing candidate inputs, and proposing the
 ```
 agent-loops/
 ├── assets/
-│   ├── banner.webp                 # Nostromo Master Loop Engineering diagram
+│   ├── banner.webp                 # Future aerospace Master Loop Engineering diagram
 │   ├── banner.png                  # High-res PNG master
 │   ├── banner.jpg                  # Optimized JPEG
-│   ├── mcp-architecture.webp       # Nostromo MCP Subsystem Connector diagram
+│   ├── mcp-architecture.webp       # Future aerospace MCP Subsystem Connector diagram
 │   ├── mcp-architecture.png        # High-res PNG master
 │   └── mcp-architecture.jpg        # Optimized JPEG
 ├── docs/

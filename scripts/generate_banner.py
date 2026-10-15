@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-"""Generate the refined Nostromo-styled widescreen banner for AI Agent Loops.
-Aesthetic: Ron Cobb, USCSS Nostromo flight deck interface, late-70s aerospace HUD,
-DIN typography, matte slate palette, technical telemetry, and hazard striping.
+"""Generate the refined future aerospace-styled widescreen banner for AI Agent Loops.
+Aesthetic: Future aerospace flight deck interface, technical HUD,
+DIN typography, matte slate palette, telemetry, and hazard striping.
 """
 import os
 from PIL import Image, ImageDraw, ImageFont
 
-font_dir = "/tmp/nostromo_fonts"
+font_dir = "/tmp/aerospace_fonts"
 din_bold = f"{font_dir}/D-DIN-Bold.ttf"
 din_regular = f"{font_dir}/D-DIN.ttf"
 din_exp = f"{font_dir}/D-DINExp-Bold.ttf"
 mono_bold = f"{font_dir}/JetBrainsMono-Bold.ttf"
 mono_reg = f"{font_dir}/JetBrainsMono-Regular.ttf"
 
-# Colors - Ron Cobb / Nostromo / Alienrobot Palette
+# Colors - Future Aerospace / Alienrobot Palette
 BG_COLOR = (15, 18, 23)          # Matte Charcoal Slate
 PANEL_BG = (22, 27, 34)          # Dark Industrial Basalt
 PANEL_SUB = (28, 34, 43)         # Sub-box fill
@@ -108,7 +108,7 @@ draw_crosshair(draw, 1060, 115)
 
 # --- Top Header Telemetry Bar ---
 draw_hazard_stripe(draw, 35, 30, 48, 16)
-draw_tracked_text(draw, 95, 31, "USCSS NOSTROMO // AUTONOMOUS AGENT HARNESS SPECIFICATION // TAC-COM REF 180286-LP", f_micro, TEXT_MUTED, spacing=2)
+draw_tracked_text(draw, 95, 31, "FUTURE AEROSPACE // AUTONOMOUS AGENT HARNESS SPECIFICATION // TAC-COM REF 180286-LP", f_micro, TEXT_MUTED, spacing=2)
 
 # Top Right Status Pill
 status_w, status_h = 240, 24
@@ -336,7 +336,7 @@ for law in laws:
 # --- Bottom Telemetry / Footer Bar ---
 foot_y = H - 38
 draw.line([(35, foot_y), (W - 35, foot_y)], fill=PANEL_BORDER, width=1)
-draw_tracked_text(draw, 35, foot_y + 10, "DESIGN SYSTEM: RON COBB NOSTROMO HUD // DIN AEROSPACE TYPOGRAPHY", f_micro, TEXT_DIM, spacing=2)
+draw_tracked_text(draw, 35, foot_y + 10, "DESIGN SYSTEM: FUTURE AEROSPACE HUD // DIN TECHNICAL TYPOGRAPHY", f_micro, TEXT_DIM, spacing=2)
 draw.text((640, foot_y + 10), "ALIENROBOT.COM // SPECIFICATION RUNBOOK", font=f_micro, fill=CYAN_ACCENT)
 
 repo_str = "PUBLIC REPOSITORY: GITHUB.COM/HUIKKU/AGENT-LOOPS"
